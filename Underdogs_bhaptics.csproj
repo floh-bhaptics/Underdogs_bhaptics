@@ -1,0 +1,36 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>F:\SteamLibrary\steamapps\common\UNDERDOGS\MelonLoader\net6\0Harmony.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Bhaptics.Tact">
+      <HintPath>libs\Bhaptics.Tact.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Il2CppOneHamsa.VR">
+      <HintPath>F:\SteamLibrary\steamapps\common\UNDERDOGS\MelonLoader\Il2CppAssemblies\Il2CppOneHamsa.VR.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Il2CppUnderdogs.Root">
+      <HintPath>F:\SteamLibrary\steamapps\common\UNDERDOGS\MelonLoader\Il2CppAssemblies\Il2CppUnderdogs.Root.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MelonLoader">
+      <HintPath>F:\SteamLibrary\steamapps\common\UNDERDOGS\MelonLoader\net6\MelonLoader.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="XCOPY &quot;$(SolutionDir)libs\bhaptics_library.dll&quot; &quot;$(TargetDir)\&quot; /S /Y&#xD;&#xA;XCOPY &quot;$(TargetDir)\*.dll&quot; &quot;F:\SteamLibrary\steamapps\common\UNDERDOGS\Mods\&quot; /S /Y" />
+  </Target>
+
+</Project>
