@@ -19,12 +19,20 @@
       <HintPath>F:\SteamLibrary\steamapps\common\UNDERDOGS\MelonLoader\Il2CppAssemblies\Il2CppOneHamsa.VR.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="Il2CppUnderdogs.Combat.GameEntity">
+      <HintPath>F:\SteamLibrary\steamapps\common\UNDERDOGS\MelonLoader\Il2CppAssemblies\Il2CppUnderdogs.Combat.GameEntity.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="Il2CppUnderdogs.Root">
       <HintPath>F:\SteamLibrary\steamapps\common\UNDERDOGS\MelonLoader\Il2CppAssemblies\Il2CppUnderdogs.Root.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="MelonLoader">
       <HintPath>F:\SteamLibrary\steamapps\common\UNDERDOGS\MelonLoader\net6\MelonLoader.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>F:\SteamLibrary\steamapps\common\UNDERDOGS\MelonLoader\Il2CppAssemblies\UnityEngine.CoreModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
   </ItemGroup>

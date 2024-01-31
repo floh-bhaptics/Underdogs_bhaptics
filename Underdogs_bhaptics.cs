@@ -15,7 +15,6 @@ namespace Underdogs_bhaptics
         public override void OnInitializeMelon()
         {
             tactsuitVr = new TactsuitVR();
-            tactsuitVr.PlaybackHaptics("HeartBeat");
         }
 
         [HarmonyPatch(typeof(PlayerMech), "ShakeCockpit", new Type[] { typeof(float), typeof(float) })]
@@ -24,9 +23,7 @@ namespace Underdogs_bhaptics
             [HarmonyPostfix]
             public static void Postfix(PlayerMech __instance)
             {
-                if (!__instance.hasHealth) return;
-                tactsuitVr.LOG("ShakeCockpit");
-                tactsuitVr.PlaybackHaptics("BellyRumble");
+                tactsuitVr.PlaybackHaptics("MechDamage");
             }
         }
 
@@ -36,9 +33,7 @@ namespace Underdogs_bhaptics
             [HarmonyPostfix]
             public static void Postfix(PlayerMech __instance)
             {
-                if (!__instance.hasHealth) return;
-                tactsuitVr.LOG("DetachLeft");
-                tactsuitVr.PlaybackHaptics("Recoil_L");
+                tactsuitVr.PlaybackHaptics("DetachArm_L");
             }
         }
 
@@ -48,9 +43,7 @@ namespace Underdogs_bhaptics
             [HarmonyPostfix]
             public static void Postfix(PlayerMech __instance)
             {
-                if (!__instance.hasHealth) return;
-                tactsuitVr.LOG("DetachRight");
-                tactsuitVr.PlaybackHaptics("Recoil_R");
+                tactsuitVr.PlaybackHaptics("DetachArm_R");
             }
         }
 
@@ -60,34 +53,21 @@ namespace Underdogs_bhaptics
             [HarmonyPostfix]
             public static void Postfix(PlayerMech __instance)
             {
-                tactsuitVr.LOG("KillMech");
                 tactsuitVr.StopThreads();
             }
         }
 
-        [HarmonyPatch(typeof(PlayerMechHealth), "onCockpitDamage", new Type[] { })]
-        public class bhaptics_onCockpitDamage
+        [HarmonyPatch(typeof(PlayerPunchBehavior), "OnPunchResolved", new Type[] { typeof(EntityInteraction) } )]
+        public class bhaptics_OnPunchResolved
         {
             [HarmonyPostfix]
-            public static void Postfix(PlayerMechHealth __instance)
+            public static void Postfix(PlayerPunchBehavior __instance, EntityInteraction punchInteraction)
             {
-                tactsuitVr.LOG("CockpitDamage");
-                tactsuitVr.PlaybackHaptics("BellyRumble");
+                if (!punchInteraction.hasImpact) return;
+                if (__instance.mechArm.side == VRSide.Right) tactsuitVr.PlaybackHaptics("Punch_R");
+                else tactsuitVr.PlaybackHaptics("Punch_L");
             }
         }
-
-        [HarmonyPatch(typeof(PlayerPunchBehavior), "add_OnPunchSucceeded")]
-        public class bhaptics_add_OnPunchSucceeded
-        {
-            [HarmonyPostfix]
-            public static void Postfix(PlayerPunchBehavior __instance)
-            {
-                tactsuitVr.LOG("PunchSucceeded");
-                bool isRight = (__instance.mechArm.side == VRSide.Right);
-                tactsuitVr.Recoil("Punch", isRight);
-            }
-        }
-
 
     }
 }

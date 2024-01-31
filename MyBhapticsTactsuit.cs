@@ -39,7 +39,7 @@ namespace MyBhapticsTactsuit
         public TactsuitVR()
         {
             LOG("Initializing suit");
-            var res = BhapticsSDK2.Initialize("65b5fb3743994972a944c895", "GCqINqyyMOlZe73leTkI", "");
+            var res = BhapticsSDK2.Initialize("65b5fb3743994972a944c895", "GCqINqyyMOlZe73leTkI");
 
             if (res > 0)
             {
