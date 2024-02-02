@@ -10,3 +10,6 @@ bhaptics support for UNDERDOGS
 - Punching
 - Broken arm detaching
 - Cockpit damage/shaking
+- heart beat when cockpit health below 25%
+- bashing
+- bomb bots exploding
