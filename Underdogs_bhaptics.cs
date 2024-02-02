@@ -3,7 +3,7 @@ using HarmonyLib;
 using MyBhapticsTactsuit;
 using Il2Cpp;
 
-[assembly: MelonInfo(typeof(Underdogs_bhaptics.Underdogs_bhaptics), "Underdogs_bhaptics", "1.0.0", "Florian Fahrenberger")]
+[assembly: MelonInfo(typeof(Underdogs_bhaptics.Underdogs_bhaptics), "Underdogs_bhaptics", "1.1.0", "Florian Fahrenberger")]
 [assembly: MelonGame("One Hamsa", "UNDERDOGS")]
 
 namespace Underdogs_bhaptics
@@ -68,6 +68,41 @@ namespace Underdogs_bhaptics
                 else tactsuitVr.PlaybackHaptics("Punch_L");
             }
         }
+
+        [HarmonyPatch(typeof(BashGuardEntity), "OnBashResolved", new Type[] { typeof(EntityInteraction) })]
+        public class bhaptics_OnBashResolved
+        {
+            [HarmonyPostfix]
+            public static void Postfix(BashGuardEntity __instance, EntityInteraction bashInteraction)
+            {
+                if (bashInteraction.totalHealthDamage > 0f) tactsuitVr.PlaybackHaptics("Bash");
+                if (bashInteraction.hasImpact) tactsuitVr.PlaybackHaptics("Bash");
+                if (bashInteraction.result.totalImpact > 0f) tactsuitVr.PlaybackHaptics("Bash");
+            }
+        }
+
+        [HarmonyPatch(typeof(PlayerMech), "OnChassisHealthChange", new Type[] { typeof(IHealthComponent), typeof(int), typeof(IEntityBehavior) })]
+        public class bhaptics_HealthChanged
+        {
+            [HarmonyPostfix]
+            public static void Postfix(PlayerMech __instance, IHealthComponent healthcomponent)
+            {
+                if (healthcomponent.health <= healthcomponent.maxHealth * 0.25f) tactsuitVr.StartHeartBeat();
+                else tactsuitVr.StopHeartBeat();
+                if (healthcomponent.health == 0) tactsuitVr.StopThreads();
+            }
+        }
+
+        [HarmonyPatch(typeof(Bomb), "Explode", new Type[] { })]
+        public class bhaptics_BombBExplode
+        {
+            [HarmonyPostfix]
+            public static void Postfix(Bomb __instance)
+            {
+                tactsuitVr.PlaybackHaptics("Explosion");
+            }
+        }
+
 
     }
 }
