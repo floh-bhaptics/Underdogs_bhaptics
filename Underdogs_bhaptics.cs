@@ -93,6 +93,16 @@ namespace Underdogs_bhaptics
             }
         }
 
+        [HarmonyPatch(typeof(PlayerMech), "OnLevelEnded", new Type[] { typeof(LevelController.LevelEndedEvent) })]
+        public class bhaptics_OnLevelEnded
+        {
+            [HarmonyPostfix]
+            public static void Postfix(PlayerMech __instance)
+            {
+                tactsuitVr.StopThreads();
+            }
+        }
+
         [HarmonyPatch(typeof(Bomb), "Explode", new Type[] { })]
         public class bhaptics_BombBExplode
         {
