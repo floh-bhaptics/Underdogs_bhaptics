@@ -3,7 +3,7 @@ using HarmonyLib;
 using MyBhapticsTactsuit;
 using Il2Cpp;
 
-[assembly: MelonInfo(typeof(Underdogs_bhaptics.Underdogs_bhaptics), "Underdogs_bhaptics", "1.1.0", "Florian Fahrenberger")]
+[assembly: MelonInfo(typeof(Underdogs_bhaptics.Underdogs_bhaptics), "Underdogs_bhaptics", "1.1.1", "Florian Fahrenberger")]
 [assembly: MelonGame("One Hamsa", "UNDERDOGS")]
 
 namespace Underdogs_bhaptics
@@ -63,9 +63,9 @@ namespace Underdogs_bhaptics
             [HarmonyPostfix]
             public static void Postfix(PlayerPunchBehavior __instance, EntityInteraction punchInteraction)
             {
-                if (!punchInteraction.hasImpact) return;
-                if (__instance.mechArm.side == VRSide.Right) tactsuitVr.PlaybackHaptics("Punch_R");
-                else tactsuitVr.PlaybackHaptics("Punch_L");
+                float intensity = (0.6f + punchInteraction.result.totalImpact / 60f * 0.4f);
+                if (__instance.mechArm.side == VRSide.Right) tactsuitVr.PlaybackHaptics("Punch_R", intensity);
+                else tactsuitVr.PlaybackHaptics("Punch_L", intensity);
             }
         }
 
